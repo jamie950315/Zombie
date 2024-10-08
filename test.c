@@ -1,19 +1,13 @@
-#include<stdio.h>
+#include <stdio.h>
 
-int calc(int mode){
-    ++mode;
-    return mode;
-
+void calc(int *i, int *j){
+    *i+=2;
+    *j+=3;
 }
 
 int main(void){
-
-    int mode=0;
-    mode=calc(mode);
-    printf("%d\n",mode);
-
-
-
-    return 0;
+    int i=0;
+    int j=5;
+    calc(&i,&j);
+    printf("%d %d\n",i,j);
 }
-
