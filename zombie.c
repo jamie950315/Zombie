@@ -177,7 +177,7 @@ while(mode ==0){
         printf("\n");
         printf("Press any key to menu:\n");
         scanf(" %c",&move);
-        mode=1;
+        mode=0;
     }    
     if(mode==2){
         printf("Enter win score: ");
