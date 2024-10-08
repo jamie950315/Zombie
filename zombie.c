@@ -153,22 +153,35 @@ while(mode ==0){
     printf("####### 4  Exit ######\n");
     printf("######################\n");
     scanf(" %d", &mode);
-    while(mode != 1 && mode != 2 && mode != 3 && mode != 4) {
+    while(mode!=1&&mode!=2&&mode!=3&&mode!=4&&mode!=5) {
         printf("Enter a valid option: ");
         scanf(" %d", &mode);
     }
-    if(mode == 3) {
+    if(mode==3){
         system("cls");
         printf("Enter the size of the board: ");
-        scanf(" %d", &SIZE);
+        scanf(" %d",&SIZE);
         printf("\nApply to which mode? (1/2):");
-        scanf(" %d", &mode);
-    }else if(mode == 4) {
+        scanf(" %d",&mode);
+    }else if(mode==4){
         return 0;
-    }
-    if(mode == 2){
+    }else if(mode==5){
+        printf("######################\n");
+        printf("### Hit the zombie ###\n");
+        printf("###  NTUST PROJECT ###\n");
+        printf("######################\n");
+        printf("#####	CREDIT	 #####\n");
+        printf("##### Jamie Chen #####\n");
+        printf("#####  OCT.2024  #####\n");
+        printf("######################\n");
+        printf("\n");
+        printf("Press any key to menu:\n");
+        scanf(" %c",&move);
+        mode=1;
+    }    
+    if(mode==2){
         printf("Enter win score: ");
-        scanf(" %d", &winScore);
+        scanf(" %d",&winScore);
     }
 
     srand(time(NULL));
