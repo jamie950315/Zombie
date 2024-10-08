@@ -63,6 +63,28 @@ void draw(int zombieX, int zombieY, int player0X, int player0Y, int player1X, in
 }
 
 
+void end(char*move,int*mode,int*leave,int*score,int*hiScore,int*player0X,int*player0Y,int*zombieX,int*zombieY){
+    printf("\n");
+    printf("## Game Over! ##\n");
+    printf("Your score: %d\n", *score);
+    printf("High Score: %d\n", *hiScore);
+    printf("Continue? (y/n/m): ");
+    scanf(" %c", &*move);
+    while(*move != 'y' && *move != 'n'&& *move != 'm') {
+        printf("Enter a valid option: ");
+        scanf(" %c", &*move);
+    }
+    if(*move=='n')*leave=1;
+    else if(*move=='m')*mode=0;
+    else if(*move=='y'){
+        *score=0;
+        *player0X=0;
+        *player0Y=0;
+        *zombieX=rand()%SIZE;
+        *zombieY=rand()%SIZE;
+    }
+}
+
 int main(void){
 
     int mode=0;
@@ -76,6 +98,7 @@ while(mode ==0){
     int p0score=0;
     int p1score=0;
     int winScore=0;
+    int leave=0;
     
     int SIZE=3;
 
@@ -168,6 +191,11 @@ while(mode ==0){
                 }
                 break;
             case 'q':
+            	
+                end(&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY);
+                if(leave==1)return 0;
+                
+            	/*
                 printf("\n");
                 printf("## Game Over! ##\n");
                 printf("Your score: %d\n", score);
@@ -187,6 +215,7 @@ while(mode ==0){
                     zombieX=rand()%SIZE;
                     zombieY=rand()%SIZE;
                 }
+                */
                 break;
             
         }
