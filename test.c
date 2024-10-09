@@ -1,13 +1,19 @@
 #include <stdio.h>
 
-void calc(int *i, int *j){
-    *i+=2;
-    *j+=3;
-}
-
-int main(void){
+int main() {
     int i=0;
-    int j=5;
-    calc(&i,&j);
-    printf("%d %d\n",i,j);
+
+    while(1){
+        if(scanf("%d",&i)){
+            break;
+        }else{
+            printf("Invalid input\n");
+            while(getchar()!='\n');
+        }
+    }
+    printf("You entered: %d\n",i);
+
+
+
+    return 0;
 }

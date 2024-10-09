@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
-#include <windows.h>
 
 void draw(int zombieX, int zombieY, int player0X, int player0Y, int player1X, int player1Y, int SIZE){
     system("cls");
@@ -57,6 +56,7 @@ void end(int*SIZE,char*move,int*mode,int*leave,int*score,int*hiScore,int*player0
         *zombieY=rand()%*SIZE;
     }
 }
+
 void endual(int*SIZE,char*move,int*mode,int*leave,int*winScore,int*p0score,int*p1score,int*player0X,int*player0Y,int*player1X,int*player1Y,int*zombieX,int*zombieY){
 	system("cls");
 	if(*p0score==*winScore)printf("P0 Wins!\n");
@@ -86,6 +86,18 @@ void endual(int*SIZE,char*move,int*mode,int*leave,int*winScore,int*p0score,int*p
     }
 }
 
+int enterInt(int enterInt){
+    while(1){
+        if(scanf("%d",&enterInt)){
+            break;
+        }else{
+            printf("Enter a valid option: \n");
+            while(getchar()!='\n');
+        }
+    }
+   return enterInt;
+}
+
 int main(void){
     int mode=0;
     int hiScore=0;
@@ -103,6 +115,8 @@ while(mode ==0){
 
     time_t lastTime=time(NULL);
     const int zombieDelay=1;
+
+    
     
 	system("cls");
     printf("######################\n");
@@ -112,20 +126,22 @@ while(mode ==0){
     printf("####### 3  Size ######\n");
     printf("####### 4  Exit ######\n");
     printf("######################\n");
-    scanf(" %d", &mode);
+
+    mode=enterInt(mode);
     while(mode!=1&&mode!=2&&mode!=3&&mode!=4&&mode!=5) {
         printf("Enter a valid option: ");
-        scanf(" %d", &mode);
+        mode=enterInt(mode);
     }
+
     if(mode==3){
         system("cls");
         printf("Enter the size of the board: ");
-        scanf(" %d",&SIZE);
+        SIZE=enterInt(SIZE);
         printf("\nApply to which mode? (1/2):");
-        scanf(" %d",&mode);
+        mode=enterInt(mode);
         while(mode!=1&&mode!=2) {
             printf("Enter a valid option: ");
-            scanf(" %d", &mode);
+            mode=enterInt(mode);
         }
     }else if(mode==4){
         return 0;
@@ -146,7 +162,7 @@ while(mode ==0){
     }    
     if(mode==2){
         printf("Enter win score: ");
-        scanf(" %d",&winScore);
+        winScore=enterInt(winScore);
     }
     
     srand(time(NULL));
