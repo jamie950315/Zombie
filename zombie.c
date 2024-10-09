@@ -124,9 +124,9 @@ while(mode ==0){
         printf("\nApply to which mode? (1/2):");
         scanf(" %d",&mode);
         while(mode!=1&&mode!=2) {
-        printf("Enter a valid option: ");
-        scanf(" %d", &mode);
-    }
+            printf("Enter a valid option: ");
+            scanf(" %d", &mode);
+        }
     }else if(mode==4){
         return 0;
     }else if(mode==5){
