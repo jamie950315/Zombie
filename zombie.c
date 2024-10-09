@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <windows.h>
 
 void draw(int zombieX, int zombieY, int player0X, int player0Y, int player1X, int player1Y, int SIZE){
     system("cls");
@@ -21,6 +22,17 @@ void draw(int zombieX, int zombieY, int player0X, int player0Y, int player1X, in
             }
         }
         printf("\n");
+    }
+}
+
+void moveZombie(int *zombieX, int *zombieY, int SIZE) {
+    int direction = rand() % 4;
+    
+    switch (direction) {
+        case 0:if (*zombieY>0)(*zombieY)--;break;
+        case 1:if (*zombieY<SIZE-1)(*zombieY)++;break;
+        case 2:if (*zombieX>0)(*zombieX)--;break;
+        case 3:if (*zombieX<SIZE-1)(*zombieX)++;break;
     }
 }
 
@@ -88,6 +100,9 @@ while(mode ==0){
     int winScore=0;
     int leave=0;
     int SIZE=3;
+
+    time_t lastTime=time(NULL);
+    const int zombieDelay=1;
     
 	system("cls");
     printf("######################\n");
@@ -108,9 +123,14 @@ while(mode ==0){
         scanf(" %d",&SIZE);
         printf("\nApply to which mode? (1/2):");
         scanf(" %d",&mode);
+        while(mode!=1&&mode!=2) {
+        printf("Enter a valid option: ");
+        scanf(" %d", &mode);
+    }
     }else if(mode==4){
         return 0;
     }else if(mode==5){
+        system("cls");
         printf("######################\n");
         printf("### Hit the zombie ###\n");
         printf("###  NTUST PROJECT ###\n");
@@ -139,13 +159,17 @@ while(mode ==0){
         player1X=SIZE-1;
         player1Y=SIZE-1;
     }
-
-    while(mode==1){
+    if(mode==1){
         draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
         printf("Score: %d\n", score);
-        move=getch();
+    }
+    while(mode==1){
         
-        switch(move){
+        if(kbhit()){
+            
+            move=getch();
+        
+            switch(move){
             case 'w':
                 if(player0Y>0)player0Y--;
                 break;
@@ -173,6 +197,17 @@ while(mode ==0){
                 end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY);
                 if(leave==1)return 0;
                 break;
+            }
+
+            draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
+            printf("Score: %d\n", score);
+        }        
+        time_t currentTime = time(NULL);
+        if (difftime(currentTime, lastTime) >= zombieDelay) {
+            moveZombie(&zombieX, &zombieY, SIZE);
+            lastTime = currentTime;
+            draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
+            printf("Score: %d\n", score);
         }
     }
 
