@@ -4,6 +4,24 @@
 #include <conio.h>
 #include <stdbool.h>
 
+void drawThree(int zombieX, int zombieY, int zombie1X, int zombie1Y, int zombie2X, int zombie2Y,int SIZE){
+    system("cls");
+    for(int i=0;i<SIZE;++i){
+        for(int j=0;j<SIZE;++j){
+            if(j==zombieX&&i==zombieY||j==zombie1X&&i==zombie1Y||j==zombie2X&&i==zombie2Y){
+                printf("§ ");
+            }else{
+                printf(". ");
+            }
+        }
+        printf("\n");
+    }
+}
+
+
+
+
+
 void draw(int zombieX, int zombieY, int player0X, int player0Y, int player1X, int player1Y, int SIZE){
     system("cls");
     for(int i=0;i<SIZE;++i){
@@ -128,24 +146,39 @@ while(mode ==0){
     int prevX=100;
     int prevY=100;
 
+
+    int zombie1X,zombie1Y,zombie2X,zombie2Y,zombie3X,zombie3Y,zombie4X,zombie4Y;
+    int prev1X=100;
+    int prev1Y=100;
+    int prev2X=100;
+    int prev2Y=100;
+    int prev3X=100;
+    int prev3Y=100;
+    int prev4X=100;
+    int prev4Y=100;
+
+    int run=false;
+
+
     
     
 	system("cls");
     printf("######################\n");
     printf("### Hit the zombie ###\n");
     printf("####### 1  Play ######\n");
-    printf("####### 2  Dual ######\n");
-    printf("####### 3 Option #####\n");
-    printf("####### 4  Exit ######\n");
+    printf("####### 2  Chase #####\n");
+    printf("####### 3  Dual ######\n");
+    printf("####### 4 Option #####\n");
+    printf("####### 5  Exit ######\n");
     printf("######################\n");
 
     mode=enterInt(mode);
-    while(mode!=1&&mode!=2&&mode!=3&&mode!=4&&mode!=5) {
+    while(mode!=1&&mode!=2&&mode!=3&&mode!=4&&mode!=5&&mode!=6) {
         printf("\nEnter a valid option: ");
         mode=enterInt(mode);
     }
 
-    if(mode==3){
+    if(mode==4){
         hiScore=0;
         system("cls");
         printf("Enter the size of the board: ");
@@ -176,15 +209,15 @@ while(mode ==0){
             printf("Enter countdown time: ");
             countdown=enterInt(countdown);
         }
-        printf("Apply to which mode? (1/2):");
+        printf("Apply to which mode? (2/3):");
         mode=enterInt(mode);
-        while(mode!=1&&mode!=2) {
+        while(mode!=2&&mode!=3) {
             printf("\nEnter a valid option: ");
             mode=enterInt(mode);
         }
-    }else if(mode==4){
-        return 0;
     }else if(mode==5){
+        return 0;
+    }else if(mode==6){
         system("cls");
         printf("######################\n");
         printf("### Hit the zombie ###\n");
@@ -199,7 +232,7 @@ while(mode ==0){
         scanf(" %c",&move);
         mode=0;
     }    
-    if(mode==2){
+    if(mode==3){
         printf("Enter win score: ");
         winScore=enterInt(winScore);
     }
@@ -207,20 +240,20 @@ while(mode ==0){
     srand(time(NULL));
     zombieX=rand()%SIZE;
     zombieY=rand()%SIZE;
-    if(mode==1){
+    if(mode==2){
         player1X=100;
         player1Y=100;
-    }else if(mode==2){
+    }else if(mode==3){
         player1X=SIZE-1;
         player1Y=SIZE-1;
     }
-    if(mode==1){
+    if(mode==2){
         draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
         printf("Score: %d\n", score);
         if(timer)printf("Time left: %d\n", countdown-passedTime);
         t=time(NULL);
     }
-    while(mode==1){
+    while(mode==2){
         if(kbhit()){
             move=getch();
             switch(move){
@@ -290,123 +323,11 @@ while(mode ==0){
             }
         }
     }
-    if(mode==2){
+    if(mode==3){
         draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
         printf("P0 Score: %d\n", p0score);
         printf("P1 Score: %d\n", p1score);
         if(timer)printf("Time left: %d\n", countdown-passedTime);
         t=time(NULL);
     }
-    while(mode==2){
-        if(kbhit()){
-            move=getch();
-            switch(move){
-            case 'w':
-                if(player0Y>0)player0Y--;
-                break;
-            case 's':
-                if(player0Y<SIZE-1)player0Y++;
-                break;
-            case 'a':
-                if(player0X>0)player0X--;
-                break;
-            case 'd':
-                if(player0X<SIZE-1)player0X++;
-                break;
-            case 'f':
-                if(player0X==zombieX&&player0Y==zombieY){
-                    ++p0score;
-                    zombieX=rand()%SIZE;
-                    zombieY=rand()%SIZE;
-                    while(prevX==zombieX&&prevY==zombieY){
-                        zombieX=rand()%SIZE;
-                        zombieY=rand()%SIZE;
-                    }
-                    prevX=zombieX;
-                    prevY=zombieY;
-                }else{
-                    ++p1score;                          
-                }
-                break;
-            case 'q':
-                endual(&SIZE,&move,&mode,&leave,&winScore,&p0score,&p1score,&player0X,&player0Y,&player1X,&player1Y,&zombieX,&zombieY);
-        		if(leave==1)return 0;
-                break;
-            case 'o':
-                if(player1Y>0)player1Y--;
-                break;
-            case 'l':
-                if(player1Y<SIZE-1)player1Y++;
-                break;
-            case 'k':
-                if(player1X>0)player1X--;
-                break;
-            case ';':
-                if(player1X<SIZE-1)player1X++;
-                break;
-            case 'j':
-                if(player1X==zombieX&&player1Y==zombieY){
-                    ++p1score;
-                    zombieX=rand()%SIZE;
-                    zombieY=rand()%SIZE;
-                    while(prevX==zombieX&&prevY==zombieY){
-                        zombieX=rand()%SIZE;
-                        zombieY=rand()%SIZE;
-                    }
-                    prevX=zombieX;
-                    prevY=zombieY;
-                }else{
-                    ++p0score;                          
-                }
-                break;
-            case 'p':
-                endual(&SIZE,&move,&mode,&leave,&winScore,&p0score,&p1score,&player0X,&player0Y,&player1X,&player1Y,&zombieX,&zombieY);
-        	if(leave==1)return 0;
-                break;
-            }
-            if(p0score==winScore||p1score==winScore){
-        	    endual(&SIZE,&move,&mode,&leave,&winScore,&p0score,&p1score,&player0X,&player0Y,&player1X,&player1Y,&zombieX,&zombieY);
-        	    if(leave==1)return 0;
-		    }
-            draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
-            printf("P0 Score: %d\n", p0score);
-            printf("P1 Score: %d\n", p1score);
-            if(timer)printf("Time left: %d\n", countdown-passedTime);
-
-        }
-        if(zombieMove=='y'){
-            time_t currentTime = time(NULL);
-            if (difftime(currentTime, lastTime) >= zombieDelay) {
-                moveZombie(&zombieX, &zombieY, SIZE);
-                lastTime = currentTime;
-                draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
-                printf("P0 Score: %d\n", p0score);
-                printf("P1 Score: %d\n", p1score);
-                if(timer)printf("Time left: %d\n", countdown-passedTime);
-
-            }
-        }
-        if(timer){
-            if(difftime(time(NULL),t)>=1){
-                ++passedTime;
-                if(passedTime>=countdown){
-                    endual(&SIZE,&move,&mode,&leave,&winScore,&p0score,&p1score,&player0X,&player0Y,&player1X,&player1Y,&zombieX,&zombieY);
-                    if(leave==1)return 0;
-                }
-                draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
-                printf("P0 Score: %d\n", p0score);
-                printf("P1 Score: %d\n", p1score);
-                if(timer)printf("Time left: %d\n", countdown-passedTime);
-                t=time(NULL);
-            }
-        }
-        
-    }
-}
-    return 0;
-}
-
-
-
-
-
+    while(mode==
