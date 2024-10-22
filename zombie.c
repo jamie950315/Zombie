@@ -330,4 +330,419 @@ while(mode ==0){
         if(timer)printf("Time left: %d\n", countdown-passedTime);
         t=time(NULL);
     }
-    while(mode==
+    while(mode==3){
+        if(kbhit()){
+            move=getch();
+            switch(move){
+            case 'w':
+                if(player0Y>0)player0Y--;
+                break;
+            case 's':
+                if(player0Y<SIZE-1)player0Y++;
+                break;
+            case 'a':
+                if(player0X>0)player0X--;
+                break;
+            case 'd':
+                if(player0X<SIZE-1)player0X++;
+                break;
+            case 'f':
+                if(player0X==zombieX&&player0Y==zombieY){
+                    ++p0score;
+                    zombieX=rand()%SIZE;
+                    zombieY=rand()%SIZE;
+                    while(prevX==zombieX&&prevY==zombieY){
+                        zombieX=rand()%SIZE;
+                        zombieY=rand()%SIZE;
+                    }
+                    prevX=zombieX;
+                    prevY=zombieY;
+                }else{
+                    ++p1score;                          
+                }
+                break;
+            case 'q':
+                endual(&SIZE,&move,&mode,&leave,&winScore,&p0score,&p1score,&player0X,&player0Y,&player1X,&player1Y,&zombieX,&zombieY);
+        		if(leave==1)return 0;
+                break;
+            case 'o':
+                if(player1Y>0)player1Y--;
+                break;
+            case 'l':
+                if(player1Y<SIZE-1)player1Y++;
+                break;
+            case 'k':
+                if(player1X>0)player1X--;
+                break;
+            case ';':
+                if(player1X<SIZE-1)player1X++;
+                break;
+            case 'j':
+                if(player1X==zombieX&&player1Y==zombieY){
+                    ++p1score;
+                    zombieX=rand()%SIZE;
+                    zombieY=rand()%SIZE;
+                    while(prevX==zombieX&&prevY==zombieY){
+                        zombieX=rand()%SIZE;
+                        zombieY=rand()%SIZE;
+                    }
+                    prevX=zombieX;
+                    prevY=zombieY;
+                }else{
+                    ++p0score;                          
+                }
+                break;
+            case 'p':
+                endual(&SIZE,&move,&mode,&leave,&winScore,&p0score,&p1score,&player0X,&player0Y,&player1X,&player1Y,&zombieX,&zombieY);
+        	if(leave==1)return 0;
+                break;
+            }
+            if(p0score==winScore||p1score==winScore){
+        	    endual(&SIZE,&move,&mode,&leave,&winScore,&p0score,&p1score,&player0X,&player0Y,&player1X,&player1Y,&zombieX,&zombieY);
+        	    if(leave==1)return 0;
+		    }
+            draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
+            printf("P0 Score: %d\n", p0score);
+            printf("P1 Score: %d\n", p1score);
+            if(timer)printf("Time left: %d\n", countdown-passedTime);
+
+        }
+        if(zombieMove=='y'){
+            time_t currentTime = time(NULL);
+            if (difftime(currentTime, lastTime) >= zombieDelay) {
+                moveZombie(&zombieX, &zombieY, SIZE);
+                lastTime = currentTime;
+                draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
+                printf("P0 Score: %d\n", p0score);
+                printf("P1 Score: %d\n", p1score);
+                if(timer)printf("Time left: %d\n", countdown-passedTime);
+
+            }
+        }
+        if(timer){
+            if(difftime(time(NULL),t)>=1){
+                ++passedTime;
+                if(passedTime>=countdown){
+                    endual(&SIZE,&move,&mode,&leave,&winScore,&p0score,&p1score,&player0X,&player0Y,&player1X,&player1Y,&zombieX,&zombieY);
+                    if(leave==1)return 0;
+                }
+                draw(zombieX, zombieY, player0X, player0Y, player1X, player1Y,SIZE);
+                printf("P0 Score: %d\n", p0score);
+                printf("P1 Score: %d\n", p1score);
+                if(timer)printf("Time left: %d\n", countdown-passedTime);
+                t=time(NULL);
+            }
+        }
+        
+    }
+
+
+
+    if(mode==1){
+        player0X=0;
+        player0Y=SIZE;
+        player1X=100;
+        player1Y=100;
+        zombieX=rand()%SIZE;
+        zombieY=0;
+        zombie1X=rand()%SIZE;
+        zombie1Y=-1;
+        zombie2X=rand()%SIZE;
+        zombie2Y=-2;
+
+        run=false;
+        
+        drawThree(zombieX,zombieY,zombie1X,zombie1Y,zombie2X,zombie2Y,SIZE);
+        printf("Score: %d\n", score);
+        if(timer)printf("Time left: %d\n", countdown-passedTime);
+        t=time(NULL);
+    }
+
+
+    while(mode==1){
+
+            if(kbhit()){
+            move=getch();
+            switch(move){
+       
+            case 's':
+                if(1==zombieX&&player0Y-1==zombieY){
+                    ++score;
+                    zombieX=rand()%SIZE;
+                    zombieY=0;
+        
+                    while(prevX==zombieX){
+                        zombieX=rand()%SIZE;
+                    }
+                    prevX=zombieX;
+
+                    zombie1Y++;
+                    zombie2Y++;
+                }else if((1==zombie1X&&player0Y-1==zombie1Y)){
+                    ++score;
+                    zombie1X=rand()%SIZE;
+                    zombie1Y=0;
+                    while(prev1X==zombie1X){
+                        zombie1X=rand()%SIZE;
+                    }
+                    prev1X=zombie1X;
+
+                    zombieY++;
+                    zombie2Y++;
+
+                }else if((1==zombie2X&&player0Y-1==zombie2Y)){
+                    ++score;
+                    zombie2X=rand()%SIZE;
+                    zombie2Y=0;
+                    while(prev2X==zombie2X){
+                        zombie2X=rand()%SIZE;
+                    }
+                    prev2X=zombie2X;
+
+                    zombieY++;
+                    zombie1Y++;
+
+
+                }
+                
+                
+                
+                
+                else{
+                    if(score>hiScore)hiScore=score;
+                    end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY,&passedTime,&t);
+                	if(leave==1)return 0;
+
+                    player0X=0;
+                    player0Y=SIZE;
+                    player1X=100;
+                    player1Y=100;
+                    zombieX=rand()%SIZE;
+                    zombieY=0;
+                    zombie1X=rand()%SIZE;
+                    zombie1Y=-1;
+                    zombie2X=rand()%SIZE;
+                    zombie2Y=-2;
+                    run=false;
+                    
+                }
+                break;
+        
+            case 'a':
+                if(0==zombieX&&player0Y-1==zombieY){
+                    ++score;
+                    zombieX=rand()%SIZE;
+                    zombieY=0;
+        
+                    while(prevX==zombieX){
+                        zombieX=rand()%SIZE;
+                    }
+                    prevX=zombieX;
+                    zombie1Y++;
+                    zombie2Y++;
+                }else if((0==zombie1X&&player0Y-1==zombie1Y)){
+                    ++score;
+                    zombie1X=rand()%SIZE;
+                    zombie1Y=0;
+                    while(prev1X==zombie1X){
+                        zombie1X=rand()%SIZE;
+                    }
+                    prev1X=zombie1X;
+                    zombieY++;
+                    zombie2Y++;
+                }else if((0==zombie2X&&player0Y-1==zombie2Y)){
+                    ++score;
+                    zombie2X=rand()%SIZE;
+                    zombie2Y=0;
+                    while(prev2X==zombie2X){
+                        zombie2X=rand()%SIZE;
+                    }
+                    prev2X=zombie2X;
+
+                    zombieY++;
+                    zombie1Y++;
+                }
+        
+
+
+
+                else{
+                    if(score>hiScore)hiScore=score;
+                    end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY,&passedTime,&t);
+                	if(leave==1)return 0;
+
+                    player0X=0;
+                    player0Y=SIZE;
+                    player1X=100;
+                    player1Y=100;
+                    zombieX=rand()%SIZE;
+                    zombieY=0;
+                    zombie1X=rand()%SIZE;
+                    zombie1Y=-1;
+                    zombie2X=rand()%SIZE;
+                    zombie2Y=-2;
+                    run=false;
+                }
+                break;
+            case 'd':
+                if(2==zombieX&&player0Y-1==zombieY){
+                    ++score;
+                    zombieX=rand()%SIZE;
+                    zombieY=0;
+        
+                    while(prevX==zombieX){
+                        zombieX=rand()%SIZE;
+                    }
+                    prevX=zombieX;
+                    zombie1Y++;
+                    zombie2Y++;
+                }else if((2==zombie1X&&player0Y-1==zombie1Y)){
+                    ++score;
+                    zombie1X=rand()%SIZE;
+                    zombie1Y=0;
+                    while(prev1X==zombie1X){
+                        zombie1X=rand()%SIZE;
+                    }
+                    prev1X=zombie1X;
+                    zombieY++;
+                    zombie2Y++;
+                }else if((2==zombie2X&&player0Y-1==zombie2Y)){
+                    ++score;
+                    zombie2X=rand()%SIZE;
+                    zombie2Y=0;
+                    while(prev2X==zombie2X){
+                        zombie2X=rand()%SIZE;
+                    }
+                    prev2X=zombie2X;
+
+                    zombieY++;
+                    zombie1Y++;
+                }
+                
+                
+                
+                
+                else{
+                    if(score>hiScore)hiScore=score;
+                    end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY,&passedTime,&t);
+                	if(leave==1)return 0;
+
+                    player0X=0;
+                    player0Y=SIZE;
+                    player1X=100;
+                    player1Y=100;
+                    zombieX=rand()%SIZE;
+                    zombieY=0;
+                    zombie1X=rand()%SIZE;
+                    zombie1Y=-1;
+                    zombie2X=rand()%SIZE;
+                    zombie2Y=-2;
+                    run=false;
+                }
+                break;
+        /*
+            case 'f':
+                if(player0X==zombieX&&player0Y==zombieY){
+                    ++score;
+                    zombieX=rand()%SIZE;
+                    zombieY=0;
+        
+                    while(prevX==zombieX){
+                        zombieX=rand()%SIZE;
+                    }
+                    prevX=zombieX;
+        
+                }else{
+                    //if(score>hiScore)hiScore=score;
+                    //end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY,&passedTime,&t);
+                	//if(leave==1)return 0;
+                }
+                break;
+        */
+            case 'q':
+                end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY,&passedTime,&t);
+                if(leave==1)return 0;
+                break;
+            }
+
+            drawThree(zombieX,zombieY,zombie1X,zombie1Y,zombie2X,zombie2Y,SIZE);
+            printf("Score: %d\n", score);
+            if(timer)printf("Time left: %d\n", countdown-passedTime);
+
+        }    
+        if(!run){
+            time_t currentTime = time(NULL);
+            if (difftime(currentTime, lastTime) >= 1) {
+                
+                zombieY++;
+                if(zombieY==SIZE){
+                    zombieX=rand()%SIZE;
+                    zombieY=0;
+                    while(prevX==zombieX){
+                        zombieX=rand()%SIZE;
+                    }
+                    prevX=zombieX;
+                    run=true;
+                }
+
+                zombie1Y++;
+                if(zombie1Y==SIZE){
+                    zombie1X=rand()%SIZE;
+                    zombie1Y=0;
+                    while(prev1X==zombie1X){
+                        zombie1X=rand()%SIZE;
+                    }
+                    prev1X=zombie1X;
+                }
+
+                zombie2Y++;
+                if(zombie2Y==SIZE){
+                    zombie2X=rand()%SIZE;
+                    zombie2Y=0;
+                    while(prev2X==zombie2X){
+                        zombie2X=rand()%SIZE;
+                    }
+                    prev2X=zombie2X;
+                    
+                }
+
+                
+
+                //moveZombie(&zombieX, &zombieY, SIZE);
+                lastTime = currentTime;
+                drawThree(zombieX,zombieY,zombie1X,zombie1Y,zombie2X,zombie2Y,SIZE);
+                printf("Score: %d\n", score);
+                if(timer)printf("Time left: %d\n", countdown-passedTime);
+
+            }
+        
+        }
+        
+        if(timer){
+            if(difftime(time(NULL),t)>=1){
+                ++passedTime;
+                if(passedTime>=countdown){
+                    if(score>hiScore)hiScore=score;
+                    end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY,&passedTime,&t);
+                    if(leave==1)return 0;
+                }
+                t=time(NULL);
+                drawThree(zombieX,zombieY,zombie1X,zombie1Y,zombie2X,zombie2Y,SIZE);
+                printf("Score: %d\n", score);
+                if(timer)printf("Time left: %d\n", countdown-passedTime);
+            }
+        }
+
+
+
+    }
+
+
+}
+    return 0;
+}
+
+
+
+
+
