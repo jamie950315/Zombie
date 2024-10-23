@@ -87,10 +87,12 @@ void endual(int*SIZE,char*move,int*mode,int*leave,int*winScore,int*p0score,int*p
     	printf("P0 Score: %d\n", *p0score);
     	printf("P1 Score: %d\n", *p1score);
 	}
+    while(getchar()!='\n');
     printf("Continue? (y/n/m): ");
     scanf(" %c", &*move);
     while(*move != 'y' && *move != 'n' && *move != 'm') {
-    printf("\nEnter a valid option: ");
+        while(getchar()!='\n');
+        printf("\nEnter a valid option: ");
     	scanf(" %c", &*move);
     }
     if(*move=='n')*leave=1;
@@ -112,8 +114,8 @@ int enterInt(int enterInt){
         if(scanf("%d",&enterInt)){
             break;
         }else{
-            printf("\nEnter a valid option: ");
             while(getchar()!='\n');
+            printf("\nEnter a valid option: ");
         }
     }
    return enterInt;
@@ -121,8 +123,9 @@ int enterInt(int enterInt){
 
 int main(void){
     int mode=0;
-    int hiScore=0;
+    
 while(mode ==0){
+    int hiScore=0;
     int score = 0;
     int zombieX, zombieY;
     int player0X=0, player0Y=0;
@@ -171,9 +174,9 @@ while(mode ==0){
     printf("####### 4 Option #####\n");
     printf("####### 5  Exit ######\n");
     printf("######################\n");
-
     mode=enterInt(mode);
     while(mode!=1&&mode!=2&&mode!=3&&mode!=4&&mode!=5&&mode!=6) {
+        while(getchar()!='\n');
         printf("\nEnter a valid option: ");
         mode=enterInt(mode);
     }
@@ -181,37 +184,47 @@ while(mode ==0){
     if(mode==4){
         hiScore=0;
         system("cls");
+        while(getchar()!='\n');
         printf("Enter the size of the board: ");
         SIZE=enterInt(SIZE);
+        while(getchar()!='\n');
         printf("Make zombie move? (y/n): ");
         scanf(" %c", &zombieMove);
         while(zombieMove!='y'&&zombieMove!='n') {
+            while(getchar()!='\n');
             printf("\nEnter a valid option: ");
             scanf(" %c", &zombieMove);
         }
         if(zombieMove=='y'){
+            while(getchar()!='\n');
             printf("Enter the delay sec of the zombie (>=1) :");
             zombieDelay=enterInt(zombieDelay);
             while(zombieDelay<1) {
+                while(getchar()!='\n');
                 printf("\nEnter a >=1 interger: ");
                 zombieDelay=enterInt(zombieDelay);
             }
         }
+        while(getchar()!='\n');
         printf("Enable timer? (y/n): ");
         scanf(" %c", &move);
         while(move!='y'&&move!='n'){
+            while(getchar()!='\n');
             printf("\nEnter a valid option: ");
             scanf(" %c", &move);
         }
         if(move=='y') timer=true;
         else if(move=='n') timer=false;
         if(timer){
+            while(getchar()!='\n');
             printf("Enter countdown time: ");
             countdown=enterInt(countdown);
         }
+        while(getchar()!='\n');
         printf("Apply to which mode? (2/3):");
         mode=enterInt(mode);
         while(mode!=2&&mode!=3) {
+            while(getchar()!='\n');
             printf("\nEnter a valid option: ");
             mode=enterInt(mode);
         }
@@ -228,11 +241,13 @@ while(mode ==0){
         printf("#####  OCT.2024  #####\n");
         printf("######################\n");
         printf("\n");
+        while(getchar()!='\n');
         printf("Press any key to menu:\n");
         scanf(" %c",&move);
         mode=0;
     }    
     if(mode==3){
+        while(getchar()!='\n');
         printf("Enter win score: ");
         winScore=enterInt(winScore);
     }
@@ -444,11 +459,11 @@ while(mode ==0){
         player1X=100;
         player1Y=100;
         zombieX=rand()%SIZE;
-        zombieY=0;
+        zombieY=-1;
         zombie1X=rand()%SIZE;
-        zombie1Y=-1;
+        zombie1Y=-2;
         zombie2X=rand()%SIZE;
-        zombie2Y=-2;
+        zombie2Y=-3;
 
         run=false;
         
@@ -675,6 +690,8 @@ while(mode ==0){
             if (difftime(currentTime, lastTime) >= 1) {
                 
                 zombieY++;
+                if(zombieY==SIZE-1)run=true;
+
                 if(zombieY==SIZE){
                     zombieX=rand()%SIZE;
                     zombieY=0;
@@ -682,7 +699,7 @@ while(mode ==0){
                         zombieX=rand()%SIZE;
                     }
                     prevX=zombieX;
-                    run=true;
+                    
                 }
 
                 zombie1Y++;
