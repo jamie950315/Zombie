@@ -59,9 +59,11 @@ void end(int*SIZE,char*move,int*mode,int*leave,int*score,int*hiScore,int*player0
     printf("## Game Over! ##\n");
     printf("Your score: %d\n", *score);
     printf("High Score: %d\n", *hiScore);
+    while(getchar()!='\n');
     printf("Continue? (y/n/m): ");
     scanf(" %c", &*move);
     while(*move != 'y' && *move != 'n'&& *move != 'm') {
+        while(getchar()!='\n');
         printf("\nEnter a valid option: ");
         scanf(" %c", &*move);
     }
@@ -459,11 +461,11 @@ while(mode ==0){
         player1X=100;
         player1Y=100;
         zombieX=rand()%SIZE;
-        zombieY=-1;
+        zombieY=-2;
         zombie1X=rand()%SIZE;
-        zombie1Y=-2;
+        zombie1Y=-3;
         zombie2X=rand()%SIZE;
-        zombie2Y=-3;
+        zombie2Y=-4;
 
         run=false;
         
@@ -533,11 +535,11 @@ while(mode ==0){
                     player1X=100;
                     player1Y=100;
                     zombieX=rand()%SIZE;
-                    zombieY=0;
+                    zombieY=-2;
                     zombie1X=rand()%SIZE;
-                    zombie1Y=-1;
+                    zombie1Y=-3;
                     zombie2X=rand()%SIZE;
-                    zombie2Y=-2;
+                    zombie2Y=-4;
                     run=false;
                     
                 }
@@ -591,11 +593,11 @@ while(mode ==0){
                     player1X=100;
                     player1Y=100;
                     zombieX=rand()%SIZE;
-                    zombieY=0;
+                    zombieY=-2;
                     zombie1X=rand()%SIZE;
-                    zombie1Y=-1;
+                    zombie1Y=-3;
                     zombie2X=rand()%SIZE;
-                    zombie2Y=-2;
+                    zombie2Y=-4;
                     run=false;
                 }
                 break;
@@ -647,11 +649,11 @@ while(mode ==0){
                     player1X=100;
                     player1Y=100;
                     zombieX=rand()%SIZE;
-                    zombieY=0;
+                    zombieY=-2;
                     zombie1X=rand()%SIZE;
-                    zombie1Y=-1;
+                    zombie1Y=-3;
                     zombie2X=rand()%SIZE;
-                    zombie2Y=-2;
+                    zombie2Y=-4;
                     run=false;
                 }
                 break;
