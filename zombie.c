@@ -468,6 +468,24 @@ while(mode ==0){
         zombie2Y=-4;
 
         run=false;
+
+        system("cls");
+        while(getchar()!='\n');
+        printf("Enable timer? (y/n): ");
+        scanf(" %c", &move);
+        while(move!='y'&&move!='n'){
+            while(getchar()!='\n');
+            printf("\nEnter a valid option: ");
+            scanf(" %c", &move);
+        }
+        if(move=='y') timer=true;
+        else if(move=='n') timer=false;
+        if(timer){
+            while(getchar()!='\n');
+            printf("Enter countdown time: ");
+            countdown=enterInt(countdown);
+        }
+        while(getchar()!='\n');
         
         drawThree(zombieX,zombieY,zombie1X,zombie1Y,zombie2X,zombie2Y,SIZE);
         printf("Score: %d\n", score);
@@ -657,25 +675,7 @@ while(mode ==0){
                     run=false;
                 }
                 break;
-        /*
-            case 'f':
-                if(player0X==zombieX&&player0Y==zombieY){
-                    ++score;
-                    zombieX=rand()%SIZE;
-                    zombieY=0;
-        
-                    while(prevX==zombieX){
-                        zombieX=rand()%SIZE;
-                    }
-                    prevX=zombieX;
-        
-                }else{
-                    //if(score>hiScore)hiScore=score;
-                    //end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY,&passedTime,&t);
-                	//if(leave==1)return 0;
-                }
-                break;
-        */
+       
             case 'q':
                 end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY,&passedTime,&t);
                 if(leave==1)return 0;
@@ -726,8 +726,6 @@ while(mode ==0){
                 }
 
                 
-
-                //moveZombie(&zombieX, &zombieY, SIZE);
                 lastTime = currentTime;
                 drawThree(zombieX,zombieY,zombie1X,zombie1Y,zombie2X,zombie2Y,SIZE);
                 printf("Score: %d\n", score);
@@ -744,6 +742,17 @@ while(mode ==0){
                     if(score>hiScore)hiScore=score;
                     end(&SIZE,&move,&mode,&leave,&score,&hiScore,&player0X,&player0Y,&zombieX,&zombieY,&passedTime,&t);
                     if(leave==1)return 0;
+                    player0X=0;
+                    player0Y=SIZE;
+                    player1X=100;
+                    player1Y=100;
+                    zombieX=rand()%SIZE;
+                    zombieY=-2;
+                    zombie1X=rand()%SIZE;
+                    zombie1Y=-3;
+                    zombie2X=rand()%SIZE;
+                    zombie2Y=-4;
+                    run=false;
                 }
                 t=time(NULL);
                 drawThree(zombieX,zombieY,zombie1X,zombie1Y,zombie2X,zombie2Y,SIZE);
