@@ -59,7 +59,7 @@ void end(int*SIZE,char*move,int*mode,int*leave,int*score,int*hiScore,int*player0
     printf("## Game Over! ##\n");
     printf("Your score: %d\n", *score);
     printf("High Score: %d\n", *hiScore);
-    while(getchar()!='\n');
+    
     printf("Continue? (y/n/m): ");
     scanf(" %c", &*move);
     while(*move != 'y' && *move != 'n'&& *move != 'm') {
@@ -89,7 +89,7 @@ void endual(int*SIZE,char*move,int*mode,int*leave,int*winScore,int*p0score,int*p
     	printf("P0 Score: %d\n", *p0score);
     	printf("P1 Score: %d\n", *p1score);
 	}
-    while(getchar()!='\n');
+    
     printf("Continue? (y/n/m): ");
     scanf(" %c", &*move);
     while(*move != 'y' && *move != 'n' && *move != 'm') {
