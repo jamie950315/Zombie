@@ -189,7 +189,7 @@ while(mode ==0){
         while(getchar()!='\n');
         printf("Enter the size of the board: ");
         SIZE=enterInt(SIZE);
-        while(SIZE<1) {
+        while(SIZE<2) {
                 while(getchar()!='\n');
                 printf("\nEnter a >=1 interger: ");
                 SIZE=enterInt(SIZE);
@@ -494,6 +494,11 @@ while(mode ==0){
             while(getchar()!='\n');
             printf("Enter countdown time: ");
             countdown=enterInt(countdown);
+            while(countdown<1) {
+                while(getchar()!='\n');
+                printf("\nEnter a >=1 interger: ");
+                countdown=enterInt(countdown);
+        	}
         }
         while(getchar()!='\n');
         
